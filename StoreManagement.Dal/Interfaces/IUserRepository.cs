@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StoreManagement.Dal.Interfaces
 {
-    interface IUserRepository: IRepository<User>
+    public interface IUserRepository: IRepository<User>
     {
     }
 }

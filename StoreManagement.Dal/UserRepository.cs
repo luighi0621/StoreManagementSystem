@@ -8,17 +8,19 @@ using System.Threading.Tasks;
 
 namespace StoreManagement.Dal
 {
-    public partial class UserRepository : DbContext, IUserRepository
+    public class UserRepository : DbContext, IUserRepository
     {
-        public DbSet<StoreManagement.Model.User> User { get; set; }
-
         private StoreManagementContext _context;
 
-        public UserRepository()
-        {
-            _context = new StoreManagementContext();
-        }
+        public DbSet<StoreManagement.Model.User> Users { get; set; }
 
+        public UserRepository() { _context = new StoreManagementContext(); }
+
+        public UserRepository(DbContextOptions<StoreManagementContext> opts)
+        {
+            _context = new StoreManagementContext(opts);
+        }
+        
         public long Count()
         {
             return _context.User.LongCount();

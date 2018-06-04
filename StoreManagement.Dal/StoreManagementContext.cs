@@ -6,16 +6,25 @@ namespace StoreManagement.Dal
 {
     public partial class StoreManagementContext : DbContext
     {
+        public StoreManagementContext(DbContextOptions<StoreManagementContext> options)
+            :base(options)
+        {
+        }
+
+        public StoreManagementContext() { }
+
         public virtual DbSet<StoreManagement.Model.Customer> Customer { get; set; }
         public virtual DbSet<StoreManagement.Model.Product> Product { get; set; }
         public virtual DbSet<StoreManagement.Model.Supplier> Supplier { get; set; }
         public virtual DbSet<StoreManagement.Model.User> User { get; set; }
 
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer(@"Data Source=.;Initial Catalog=StoreManagement;Integrated Security=True;Pooling=False;");
             }
         }
