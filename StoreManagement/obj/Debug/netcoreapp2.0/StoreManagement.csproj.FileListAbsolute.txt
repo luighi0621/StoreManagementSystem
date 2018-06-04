@@ -1,8 +1,0 @@
-c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement\bin\Debug\netcoreapp2.0\StoreManagement.deps.json
-c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement\bin\Debug\netcoreapp2.0\StoreManagement.runtimeconfig.json
-c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement\bin\Debug\netcoreapp2.0\StoreManagement.runtimeconfig.dev.json
-c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement\bin\Debug\netcoreapp2.0\StoreManagement.dll
-c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement\obj\Debug\netcoreapp2.0\StoreManagement.csprojResolveAssemblyReference.cache
-c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement\obj\Debug\netcoreapp2.0\StoreManagement.csproj.CoreCompileInputs.cache
-c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement\obj\Debug\netcoreapp2.0\StoreManagement.AssemblyInfoInputs.cache
-c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement\obj\Debug\netcoreapp2.0\StoreManagement.AssemblyInfo.cs
