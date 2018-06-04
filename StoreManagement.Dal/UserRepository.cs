@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StoreManagement.Dal.Interfaces;
-using StoreManagement.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace StoreManagement.Dal
 {
-    public class UserRepository : IUserRepository
+    public partial class UserRepository : DbContext, IUserRepository
     {
+        public DbSet<StoreManagement.Model.User> User { get; set; }
+
         private StoreManagementContext _context;
 
         public UserRepository()
@@ -23,7 +24,7 @@ namespace StoreManagement.Dal
             return _context.User.LongCount();
         }
 
-        public void Create(User add)
+        public void Create(StoreManagement.Model.User add)
         {
             if (add != null)
             {
@@ -40,7 +41,7 @@ namespace StoreManagement.Dal
 
         }
 
-        public void Delete(User delete)
+        public void Delete(StoreManagement.Model.User delete)
         {
             if (delete != null)
             {
@@ -57,7 +58,7 @@ namespace StoreManagement.Dal
 
         }
 
-        public User Get(Expression<Func<User, bool>> condition)
+        public StoreManagement.Model.User Get(Expression<Func<StoreManagement.Model.User, bool>> condition)
         {
             if (condition != null)
             {
@@ -69,17 +70,17 @@ namespace StoreManagement.Dal
 
         }
 
-        public IList<User> GetAll()
+        public IList<StoreManagement.Model.User> GetAll()
         {
             return _context.User.ToList();
         }
 
-        public async Task<IList<User>> GetAllAsync()
+        public async Task<IList<StoreManagement.Model.User>> GetAllAsync()
         {
             return await _context.User.ToListAsync();
         }
 
-        public async Task<User> GetAsync(Expression<Func<User, bool>> condition)
+        public async Task<StoreManagement.Model.User> GetAsync(Expression<Func<StoreManagement.Model.User, bool>> condition)
         {
             if (condition != null)
             {
@@ -96,7 +97,7 @@ namespace StoreManagement.Dal
             return await _context.SaveChangesAsync();
         }
 
-        public void Update(User update)
+        public void Update(StoreManagement.Model.User update)
         {
             try
             {

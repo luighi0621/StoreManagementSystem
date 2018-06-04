@@ -1,16 +1,15 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using StoreManagement.Model;
 
 namespace StoreManagement.Dal
 {
     public partial class StoreManagementContext : DbContext
     {
-        public virtual DbSet<Customer> Customer { get; set; }
-        public virtual DbSet<Product> Product { get; set; }
-        public virtual DbSet<Supplier> Supplier { get; set; }
-        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<StoreManagement.Model.Customer> Customer { get; set; }
+        public virtual DbSet<StoreManagement.Model.Product> Product { get; set; }
+        public virtual DbSet<StoreManagement.Model.Supplier> Supplier { get; set; }
+        public virtual DbSet<StoreManagement.Model.User> User { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -23,7 +22,7 @@ namespace StoreManagement.Dal
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>(entity =>
+            modelBuilder.Entity<StoreManagement.Model.Customer>(entity =>
             {
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
@@ -46,7 +45,7 @@ namespace StoreManagement.Dal
                 entity.Property(e => e.Phone).HasMaxLength(15);
             });
 
-            modelBuilder.Entity<Product>(entity =>
+            modelBuilder.Entity<StoreManagement.Model.Product>(entity =>
             {
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
@@ -63,7 +62,7 @@ namespace StoreManagement.Dal
                     .HasColumnType("nchar(10)");
             });
 
-            modelBuilder.Entity<Supplier>(entity =>
+            modelBuilder.Entity<StoreManagement.Model.Supplier>(entity =>
             {
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
@@ -80,7 +79,7 @@ namespace StoreManagement.Dal
                     .HasColumnType("nchar(10)");
             });
 
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<StoreManagement.Model.User>(entity =>
             {
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")

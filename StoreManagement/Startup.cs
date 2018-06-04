@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StoreManagement.Dal;
+using Microsoft.EntityFrameworkCore;
 
 namespace StoreManagement
 {
@@ -22,6 +24,8 @@ namespace StoreManagement
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddDbContext<UserRepository>(options => options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
