@@ -92,7 +92,7 @@ namespace StoreManagement.Dal
             {
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
-                    .ValueGeneratedNever();
+                    .UseSqlServerIdentityColumn();
 
                 entity.Property(e => e.Firstname)
                     .IsRequired()
