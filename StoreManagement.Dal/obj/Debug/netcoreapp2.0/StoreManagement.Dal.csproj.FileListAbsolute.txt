@@ -1,0 +1,8 @@
+c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement.Dal\bin\Debug\netcoreapp2.0\StoreManagement.Dal.deps.json
+c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement.Dal\bin\Debug\netcoreapp2.0\StoreManagement.Dal.dll
+c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement.Dal\obj\Debug\netcoreapp2.0\StoreManagement.Dal.csproj.CoreCompileInputs.cache
+c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement.Dal\obj\Debug\netcoreapp2.0\StoreManagement.Dal.AssemblyInfoInputs.cache
+c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement.Dal\obj\Debug\netcoreapp2.0\StoreManagement.Dal.AssemblyInfo.cs
+c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement.Dal\obj\Debug\netcoreapp2.0\StoreManagement.Dal.csprojResolveAssemblyReference.cache
+c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement.Dal\bin\Debug\netcoreapp2.0\StoreManagement.Dal.runtimeconfig.json
+c:\users\luis.choque\Projects\StoreManagementSystem\StoreManagement.Dal\bin\Debug\netcoreapp2.0\StoreManagement.Dal.runtimeconfig.dev.json
