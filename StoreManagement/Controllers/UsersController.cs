@@ -104,6 +104,32 @@ namespace StoreManagement.Controllers
             return View(user);
         }
 
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.GetAsync(m => m.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var movie = await _context.GetAsync(m => m.Id == id);
+            _context.Delete(movie);
+            await _context.SaveAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
         private bool UserExists(int id)
         {
             return _context.Get(e => e.Id == id) != null;
