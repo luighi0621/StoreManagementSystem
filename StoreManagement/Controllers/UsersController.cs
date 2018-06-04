@@ -40,5 +40,20 @@ namespace StoreManagement.Controllers
             }
             return View(user);
         }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.GetAsync(u => u.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
     }
 }
