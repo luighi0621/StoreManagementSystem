@@ -10,18 +10,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace StoreManagement.Controllers
 {
-    public class UsersController : Controller
+    public class ProductsController : Controller
     {
-        private readonly IUserRepository _context;
+        private readonly IProductRepository _context;
 
-        public UsersController()
+        public ProductsController()
         {
-            _context = new UserRepository();
+            _context = new ProductRepository();
         }
 
         public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.GetAllAsync());
+            var list = await _context.GetAllAsync();
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                list = list.Where(prod => prod.Supplier.Name.Contains(searchString)).ToList();
+            }
+            return View(list);
         }
 
         public IActionResult Create()
@@ -31,15 +36,16 @@ namespace StoreManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id, Firstname, Lastname, Login, Password")] User  user)
+        public async Task<IActionResult> Create([Bind("Id, Name, Description, Image, ProductCode, IdSupplier")] Product prod)
         {
             if (ModelState.IsValid)
             {
-                _context.Create(user);
+                //prod.Supplier = new Supplier() { Id = prod.IdSupplier };
+                _context.Create(prod);
                 await _context.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(prod);
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -49,12 +55,12 @@ namespace StoreManagement.Controllers
                 return NotFound();
             }
 
-            var user = await _context.GetAsync(u => u.Id == id);
-            if (user == null)
+            var prod = await _context.GetAsync(u => u.Id == id);
+            if (prod == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(prod);
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -64,19 +70,19 @@ namespace StoreManagement.Controllers
                 return NotFound();
             }
 
-            var user = await _context.GetAsync(m => m.Id == id);
-            if (user == null)
+            var prod = await _context.GetAsync(m => m.Id == id);
+            if (prod == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(prod);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Firstname,Lastname,Login,Password")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ProductCode,Name,Description,Image,IdSupplier")] Product prod)
         {
-            if (id != user.Id)
+            if (id != prod.Id)
             {
                 return NotFound();
             }
@@ -85,12 +91,12 @@ namespace StoreManagement.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(prod);
                     await _context.SaveAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.Id))
+                    if (!ProductExists(prod.Id))
                     {
                         return NotFound();
                     }
@@ -101,7 +107,7 @@ namespace StoreManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(prod);
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -111,26 +117,26 @@ namespace StoreManagement.Controllers
                 return NotFound();
             }
 
-            var user = await _context.GetAsync(m => m.Id == id);
-            if (user == null)
+            var prod = await _context.GetAsync(m => m.Id == id);
+            if (prod == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(prod);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var movie = await _context.GetAsync(m => m.Id == id);
-            _context.Delete(movie);
+            var prod = await _context.GetAsync(m => m.Id == id);
+            _context.Delete(prod);
             await _context.SaveAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool ProductExists(int id)
         {
             return _context.Get(e => e.Id == id) != null;
         }

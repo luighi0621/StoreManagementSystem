@@ -13,7 +13,7 @@ namespace StoreManagement.Model
         public byte[] Image { get; set; }
         public string ProductCode { get; set; }
         public int IdSupplier { get; set; }
-        [ForeignKey("BlogForeignKey")]
+        [ForeignKey("IdSupplier")]
         public virtual Supplier Supplier { get; set; }
     }
 }
