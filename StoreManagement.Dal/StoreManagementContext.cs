@@ -34,8 +34,7 @@ namespace StoreManagement.Dal
             modelBuilder.Entity<StoreManagement.Model.Customer>(entity =>
             {
                 entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .ValueGeneratedNever();
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.Address).HasMaxLength(50);
 

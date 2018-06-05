@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace StoreManagement.Model
@@ -12,6 +13,7 @@ namespace StoreManagement.Model
         public string Address { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        [Display(Name = "Customer Code")]
         public string CustomerCode { get; set; }
     }
 }
