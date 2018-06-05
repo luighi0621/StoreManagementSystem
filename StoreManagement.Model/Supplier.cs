@@ -7,6 +7,11 @@ namespace StoreManagement.Model
 {
     public partial class Supplier
     {
+        public Supplier()
+        {
+            this.Products = new HashSet<Product>();
+        }
+
         public int Id { get; set; }
         [StringLength(20, MinimumLength = 10)]
         [Required]
@@ -16,5 +21,7 @@ namespace StoreManagement.Model
         [StringLength(20, MinimumLength = 4)]
         [Required]
         public string SupplierCode { get; set; }
+
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

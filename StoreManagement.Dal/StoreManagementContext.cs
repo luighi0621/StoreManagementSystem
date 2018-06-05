@@ -6,26 +6,26 @@ namespace StoreManagement.Dal
 {
     public partial class StoreManagementContext : DbContext
     {
-        public StoreManagementContext(DbContextOptions<StoreManagementContext> options)
-            :base(options)
+        public StoreManagementContext()
         {
         }
 
-        public StoreManagementContext() { }
+        public StoreManagementContext(DbContextOptions<StoreManagementContext> options)
+            : base(options)
+        {
+        }
 
         public virtual DbSet<StoreManagement.Model.Customer> Customer { get; set; }
         public virtual DbSet<StoreManagement.Model.Product> Product { get; set; }
         public virtual DbSet<StoreManagement.Model.Supplier> Supplier { get; set; }
         public virtual DbSet<StoreManagement.Model.User> User { get; set; }
 
-
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer(@"Data Source=.;Initial Catalog=StoreManagement;Integrated Security=True;Pooling=False;");
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=StoreManagement;Integrated Security=True;Pooling=False");
             }
         }
 
@@ -41,7 +41,7 @@ namespace StoreManagement.Dal
 
                 entity.Property(e => e.CustomerCode)
                     .IsRequired()
-                    .HasColumnType("nchar(10)");
+                    .HasMaxLength(10);
 
                 entity.Property(e => e.Email).HasMaxLength(30);
 
@@ -56,10 +56,6 @@ namespace StoreManagement.Dal
 
             modelBuilder.Entity<StoreManagement.Model.Product>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .ValueGeneratedNever();
-
                 entity.Property(e => e.Description).HasMaxLength(100);
 
                 entity.Property(e => e.Name)
@@ -68,16 +64,20 @@ namespace StoreManagement.Dal
 
                 entity.Property(e => e.ProductCode)
                     .IsRequired()
-                    .HasColumnType("nchar(10)");
+                    .HasMaxLength(10);
+
+                entity.HasOne(d => d.Supplier)
+                    .WithMany(p => p.Products)
+                    .HasForeignKey(d => d.IdSupplier)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Product_Supplier");
             });
 
             modelBuilder.Entity<StoreManagement.Model.Supplier>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .UseSqlServerIdentityColumn();
+                entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.Description).HasMaxLength(100);
+                entity.Property(e => e.Description).HasMaxLength(200);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -85,14 +85,12 @@ namespace StoreManagement.Dal
 
                 entity.Property(e => e.SupplierCode)
                     .IsRequired()
-                    .HasColumnType("nchar(10)");
+                    .HasMaxLength(20);
             });
 
             modelBuilder.Entity<StoreManagement.Model.User>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .UseSqlServerIdentityColumn();
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Firstname)
                     .IsRequired()
@@ -102,7 +100,7 @@ namespace StoreManagement.Dal
 
                 entity.Property(e => e.Login)
                     .IsRequired()
-                    .HasColumnType("nchar(20)");
+                    .HasMaxLength(20);
 
                 entity.Property(e => e.Password)
                     .IsRequired()
