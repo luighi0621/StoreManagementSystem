@@ -1,36 +1,38 @@
-﻿using Microsoft.EntityFrameworkCore;
-using StoreManagement.Dal.Interfaces;
+﻿using StoreManagement.Dal.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
+using StoreManagement.Model;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace StoreManagement.Dal
 {
-    public class UserRepository : DbContext, IUserRepository
+    public class SupplierRepository : ISupplierRepository
     {
         private StoreManagementContext _context;
 
-        public UserRepository() { _context = new StoreManagementContext(); }
+        public SupplierRepository() { _context = new StoreManagementContext(); }
 
-        public UserRepository(DbContextOptions<StoreManagementContext> opts)
+        public SupplierRepository(DbContextOptions<StoreManagementContext> opts)
         {
             _context = new StoreManagementContext(opts);
         }
-        
+
         public long Count()
         {
-            return _context.User.LongCount();
+            return _context.Supplier.LongCount();
         }
 
-        public void Create(StoreManagement.Model.User add)
+        public void Create(Supplier add)
         {
             if (add != null)
             {
                 try
                 {
-                    _context.User.Add(add);
+                    _context.Supplier.Add(add);
                     _context.SaveChanges();
                 }
                 catch (Exception ex)
@@ -38,16 +40,15 @@ namespace StoreManagement.Dal
                     throw ex;
                 }
             }
-
         }
 
-        public void Delete(StoreManagement.Model.User delete)
+        public void Delete(Supplier delete)
         {
             if (delete != null)
             {
                 try
                 {
-                    _context.User.Remove(delete);
+                    _context.Supplier.Remove(delete);
                     _context.SaveChanges();
                 }
                 catch (Exception ex)
@@ -55,41 +56,38 @@ namespace StoreManagement.Dal
                     throw ex;
                 }
             }
-
         }
 
-        public StoreManagement.Model.User Get(Expression<Func<StoreManagement.Model.User, bool>> condition)
+        public Supplier Get(Expression<Func<Supplier, bool>> condition)
         {
             if (condition != null)
             {
-                var singleUser = _context.User.Where(condition).FirstOrDefault();
-                return singleUser;
+                var singlesupplier = _context.Supplier.Where(condition).FirstOrDefault();
+                return singlesupplier;
 
             }
             return null;
-
         }
 
-        public IList<StoreManagement.Model.User> GetAll()
+        public IList<Supplier> GetAll()
         {
-            return _context.User.ToList();
+            return _context.Supplier.ToList();
         }
 
-        public async Task<IList<StoreManagement.Model.User>> GetAllAsync()
+        public async Task<IList<Supplier>> GetAllAsync()
         {
-            return await _context.User.ToListAsync();
+            return await _context.Supplier.ToListAsync();
         }
 
-        public async Task<StoreManagement.Model.User> GetAsync(Expression<Func<StoreManagement.Model.User, bool>> condition)
+        public async Task<Supplier> GetAsync(Expression<Func<Supplier, bool>> condition)
         {
             if (condition != null)
             {
-                var singleUser = _context.User.Where(condition).FirstOrDefaultAsync();
-                return await singleUser;
+                var singlesupplier = _context.Supplier.Where(condition).FirstOrDefaultAsync();
+                return await singlesupplier;
 
             }
             return null;
-
         }
 
         public async Task<int> SaveAsync()
@@ -97,7 +95,7 @@ namespace StoreManagement.Dal
             return await _context.SaveChangesAsync();
         }
 
-        public void Update(StoreManagement.Model.User update)
+        public void Update(Supplier update)
         {
             try
             {
@@ -108,7 +106,6 @@ namespace StoreManagement.Dal
             {
                 throw ex;
             }
-
         }
     }
 }

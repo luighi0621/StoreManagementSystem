@@ -12,7 +12,7 @@ namespace StoreManagement.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly UserRepository _context;
+        private readonly IUserRepository _context;
 
         public UsersController()
         {
@@ -86,7 +86,7 @@ namespace StoreManagement.Controllers
                 try
                 {
                     _context.Update(user);
-                    await _context.SaveChangesAsync();
+                    await _context.SaveAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
