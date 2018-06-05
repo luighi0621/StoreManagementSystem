@@ -90,6 +90,11 @@ namespace StoreManagement.Dal
             return null;
         }
 
+        public DbQuery<TQuery> Query<TQuery>() where TQuery : class
+        {
+            return _context.Query<TQuery>();
+        }
+
         public async Task<int> SaveAsync()
         {
             return await _context.SaveChangesAsync();

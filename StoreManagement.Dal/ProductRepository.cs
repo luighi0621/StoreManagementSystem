@@ -42,6 +42,11 @@ namespace StoreManagement.Dal
             }
         }
 
+        public IList<Supplier> GetSuppliers()
+        {
+            return _context.Supplier.ToList();
+        }
+
         public void Delete(Product delete)
         {
             if (delete != null)

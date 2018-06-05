@@ -7,12 +7,13 @@ using StoreManagement.Dal.Interfaces;
 using StoreManagement.Dal;
 using StoreManagement.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace StoreManagement.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly IProductRepository _context;
+        private readonly ProductRepository _context;
 
         public ProductsController()
         {
@@ -31,6 +32,9 @@ namespace StoreManagement.Controllers
 
         public IActionResult Create()
         {
+            var list = _context.GetSuppliers();
+            SelectList sList = new SelectList(list, "Id", "Name");
+            ViewBag.Suppliers = sList;
             return View();
         }
 
