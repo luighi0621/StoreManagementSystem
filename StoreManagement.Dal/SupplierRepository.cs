@@ -14,8 +14,6 @@ namespace StoreManagement.Dal
     {
         private StoreManagementContext _context;
 
-        public SupplierRepository() { _context = new StoreManagementContext(); }
-
         public SupplierRepository(DbContextOptions<StoreManagementContext> opts)
         {
             _context = new StoreManagementContext(opts);

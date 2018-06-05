@@ -14,9 +14,9 @@ namespace StoreManagement.Controllers
     {
         private readonly IUserRepository _context;
 
-        public UsersController()
+        public UsersController(IUserRepository userrep)
         {
-            _context = new UserRepository();
+            _context = userrep;
         }
 
         public async Task<IActionResult> Index(string searchString)

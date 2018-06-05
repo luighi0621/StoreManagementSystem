@@ -13,11 +13,13 @@ namespace StoreManagement.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly ProductRepository _context;
+        private readonly IProductRepository _context;
+        private readonly ISupplierRepository _supplierContext;
 
-        public ProductsController()
+        public ProductsController(IProductRepository prod, ISupplierRepository supp)
         {
-            _context = new ProductRepository();
+            _context = prod;
+            _supplierContext = supp;
         }
 
         public async Task<IActionResult> Index(string searchString)
@@ -32,7 +34,7 @@ namespace StoreManagement.Controllers
 
         public IActionResult Create()
         {
-            var list = _context.GetSuppliers();
+            var list = _supplierContext.GetAll();
             SelectList sList = new SelectList(list, "Id", "Name");
             ViewBag.Suppliers = sList;
             return View();

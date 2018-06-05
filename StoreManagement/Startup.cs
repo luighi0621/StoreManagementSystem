@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StoreManagement.Dal;
 using Microsoft.EntityFrameworkCore;
+using StoreManagement.Dal.Interfaces;
 
 namespace StoreManagement
 {
@@ -26,6 +27,10 @@ namespace StoreManagement
             services.AddMvc();
 
             services.AddDbContext<StoreManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbContext")));
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

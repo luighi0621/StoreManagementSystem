@@ -14,9 +14,9 @@ namespace StoreManagement.Controllers
     {
         private readonly ICustomerRepository _context;
 
-        public CustomersController()
+        public CustomersController(ICustomerRepository repo)
         {
-            _context = new CustomerRepository();
+            _context = repo;
         }
 
         public async Task<IActionResult> Index()

@@ -14,9 +14,9 @@ namespace StoreManagement.Controllers
     {
         private readonly ISupplierRepository _context;
 
-        public SuppliersController()
+        public SuppliersController(ISupplierRepository supp)
         {
-            _context = new SupplierRepository();
+            _context = supp;
         }
 
         public async Task<IActionResult> Index()

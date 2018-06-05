@@ -14,8 +14,6 @@ namespace StoreManagement.Dal
     {
         private StoreManagementContext _context;
 
-        public ProductRepository() { _context = new StoreManagementContext(); }
-
         public ProductRepository(DbContextOptions<StoreManagementContext> opts)
         {
             _context = new StoreManagementContext(opts);
@@ -40,11 +38,6 @@ namespace StoreManagement.Dal
                     throw ex;
                 }
             }
-        }
-
-        public IList<Supplier> GetSuppliers()
-        {
-            return _context.Supplier.ToList();
         }
 
         public void Delete(Product delete)
