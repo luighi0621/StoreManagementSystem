@@ -11,9 +11,20 @@ namespace StoreManagement.Model
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [Required]
+        [StringLength(30, MinimumLength =5)]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string Firstname { get; set; }
+        [StringLength(30, MinimumLength = 5)]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string Lastname { get; set; }
+        [Required]
+        [StringLength(20, MinimumLength = 8)]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string Login { get; set; }
+        [Required]
+        [StringLength(20, MinimumLength = 8)]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string Password { get; set; }
         public byte[] AvatarImage { get; set; }
     }
