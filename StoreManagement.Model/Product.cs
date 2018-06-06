@@ -11,7 +11,9 @@ namespace StoreManagement.Model
         public int Id { get; set; }
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         [Required]
+        [StringLength(20, MinimumLength = 10)]
         public string Name { get; set; }
+        [StringLength(50, MinimumLength = 10)]
         public string Description { get; set; }
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public byte[] Image { get; set; }

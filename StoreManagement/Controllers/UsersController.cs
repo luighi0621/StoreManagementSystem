@@ -7,6 +7,9 @@ using StoreManagement.Dal.Interfaces;
 using StoreManagement.Dal;
 using StoreManagement.Model;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
+using System.Text;
+using System.Security;
 
 namespace StoreManagement.Controllers
 {
@@ -31,10 +34,18 @@ namespace StoreManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id, Firstname, Lastname, Login, Password")] User  user)
+        public async Task<IActionResult> Create([Bind("Id, Firstname, Lastname, Login, Password, AvatarImage")] User  user)
         {
             if (ModelState.IsValid)
             {
+                var ss = Request.Form.Files[0];
+                string imageString = string.Empty;
+                using (var reader = new StreamReader(ss.OpenReadStream()))
+                {
+                    imageString = reader.ReadToEnd();
+                }
+                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(imageString);
+                user.AvatarImage = Convert.FromBase64String(Convert.ToBase64String(plainTextBytes));
                 _context.Create(user);
                 await _context.SaveAsync();
                 return RedirectToAction(nameof(Index));
@@ -69,6 +80,7 @@ namespace StoreManagement.Controllers
             {
                 return NotFound();
             }
+
             return View(user);
         }
 
