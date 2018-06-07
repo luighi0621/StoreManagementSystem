@@ -18,7 +18,9 @@ namespace StoreManagement.Model
         public byte[] Image { get; set; }
         [Required]
         [StringLength(20, MinimumLength = 4)]
+        [Display(Name = "Code")]
         public string ProductCode { get; set; }
+        [Display(Name = "Supplier")]
         public int IdSupplier { get; set; }
         [ForeignKey("IdSupplier")]
         public virtual Supplier Supplier { get; set; }

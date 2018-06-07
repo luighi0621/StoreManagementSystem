@@ -82,6 +82,9 @@ namespace StoreManagement.Controllers
             {
                 return NotFound();
             }
+            var list = _supplierContext.GetAll();
+            SelectList sList = new SelectList(list, "Id", "Name");
+            ViewBag.Suppliers = sList;
             return View(prod);
         }
 
