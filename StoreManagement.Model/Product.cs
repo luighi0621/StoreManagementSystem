@@ -15,11 +15,10 @@ namespace StoreManagement.Model
         public string Name { get; set; }
         [StringLength(50, MinimumLength = 10)]
         public string Description { get; set; }
-        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public byte[] Image { get; set; }
         [Required]
+        [StringLength(20, MinimumLength = 4)]
         public string ProductCode { get; set; }
-        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public int IdSupplier { get; set; }
         [ForeignKey("IdSupplier")]
         public virtual Supplier Supplier { get; set; }

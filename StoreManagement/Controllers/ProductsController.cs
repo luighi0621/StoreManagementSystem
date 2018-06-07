@@ -8,6 +8,7 @@ using StoreManagement.Dal;
 using StoreManagement.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 
 namespace StoreManagement.Controllers
 {
@@ -42,11 +43,11 @@ namespace StoreManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id, Name, Description, Image, ProductCode, IdSupplier")] Product prod)
+        public async Task<IActionResult> Create([Bind("Id, Name, Description, ProductCode, IdSupplier")] Product prod, IFormFile image)
         {
             if (ModelState.IsValid)
             {
-                //prod.Supplier = new Supplier() { Id = prod.IdSupplier };
+                prod.Image = Common.ImageHelper.fileTobytes(image);
                 _context.Create(prod);
                 await _context.SaveAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,7 +87,7 @@ namespace StoreManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ProductCode,Name,Description,Image,IdSupplier")] Product prod)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ProductCode,Name,Description,IdSupplier")] Product prod, IFormFile image)
         {
             if (id != prod.Id)
             {
@@ -97,6 +98,7 @@ namespace StoreManagement.Controllers
             {
                 try
                 {
+                    prod.Image = Common.ImageHelper.fileTobytes(image);
                     _context.Update(prod);
                     await _context.SaveAsync();
                 }

@@ -9,12 +9,15 @@ namespace StoreManagement.Common
         public static byte[] fileTobytes(IFormFile file)
         {
             byte[] filebyes = null;
-            using (var reader = file.OpenReadStream())
+            if (file != null)
             {
-                using (var mem = new MemoryStream())
+                using (var reader = file.OpenReadStream())
                 {
-                    reader.CopyTo(mem);
-                    filebyes = mem.ToArray();
+                    using (var mem = new MemoryStream())
+                    {
+                        reader.CopyTo(mem);
+                        filebyes = mem.ToArray();
+                    }
                 }
             }
             return filebyes;
@@ -22,6 +25,7 @@ namespace StoreManagement.Common
 
         public static string bytesToString(byte[] bytes)
         {
+            if (bytes == null) { return string.Empty; }
             var base64 = Convert.ToBase64String(bytes);
             return string.Format("data:image/png;base64,{0}", base64);
         }

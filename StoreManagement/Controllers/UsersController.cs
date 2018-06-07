@@ -81,7 +81,7 @@ namespace StoreManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Firstname,Lastname,Login,Password")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Firstname,Lastname,Login,Password")] User user, IFormFile imageAvatar)
         {
             if (id != user.Id)
             {
@@ -92,6 +92,7 @@ namespace StoreManagement.Controllers
             {
                 try
                 {
+                    user.AvatarImage = Common.ImageHelper.fileTobytes(imageAvatar);
                     _context.Update(user);
                     await _context.SaveAsync();
                 }
