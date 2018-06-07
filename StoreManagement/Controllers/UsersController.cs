@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Text;
 using System.Security;
+using Microsoft.AspNetCore.Http;
 
 namespace StoreManagement.Controllers
 {
@@ -34,18 +35,12 @@ namespace StoreManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id, Firstname, Lastname, Login, Password, AvatarImage")] User  user)
+        public async Task<IActionResult> Create([Bind("Id, Firstname, Lastname, Login, Password")] User  user, IFormFile imageAvatar)
         {
             if (ModelState.IsValid)
             {
-                var ss = Request.Form.Files[0];
-                string imageString = string.Empty;
-                using (var reader = new StreamReader(ss.OpenReadStream()))
-                {
-                    imageString = reader.ReadToEnd();
-                }
-                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(imageString);
-                user.AvatarImage = Convert.FromBase64String(Convert.ToBase64String(plainTextBytes));
+                
+                user.AvatarImage = StoreManagement.Common.ImageHelper.fileTobytes(imageAvatar);
                 _context.Create(user);
                 await _context.SaveAsync();
                 return RedirectToAction(nameof(Index));

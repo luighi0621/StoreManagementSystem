@@ -1,9 +1,9 @@
 ﻿@model StoreManagement.Model.User
-
+@using StoreManagement.Common
 @{
     ViewData["Title"] = "Details";
-    var base64 = Convert.ToBase64String(Model.AvatarImage);
-    var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+    var imgSrc = ImageHelper.bytesToString(Model.AvatarImage);
 }
 
 <h2>Details</h2>
@@ -41,7 +41,6 @@
         </dt>
         <dd>
             @*@Html.DisplayFor(model => model.AvatarImage)*@
-            @Html.DisplayFor(model => model.AvatarImage)
             <img src="@imgSrc" width="100" height="100"/>
         </dd>
     </dl>
