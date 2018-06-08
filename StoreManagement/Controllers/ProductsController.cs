@@ -23,14 +23,20 @@ namespace StoreManagement.Controllers
             _supplierContext = supp;
         }
 
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index()
         {
             var list = await _context.GetAllAsync();
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                list = list.Where(prod => prod.Supplier.Name.Contains(searchString)).ToList();
-            }
             return View(list);
+        }
+        [HttpPost]
+        public PartialViewResult FilterProductsAjax(string filter)
+        {
+            var list = _context.GetAll();
+            if (!string.IsNullOrEmpty(filter))
+            {
+                list = list = list.Where(prod => prod.Supplier.Name.ToLower().Contains(filter.ToLower())).ToList();
+            }
+            return PartialView("PartialViewList", list);
         }
 
         public IActionResult Create()

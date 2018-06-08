@@ -27,6 +27,7 @@ namespace StoreManagement
             services.AddMvc();
 
             services.AddDbContext<StoreManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbContext")));
+
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IUserRepository, UserRepository>();

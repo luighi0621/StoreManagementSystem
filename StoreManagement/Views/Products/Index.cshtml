@@ -10,61 +10,34 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-<form>
+<form data-ajax="true" method="post" data-ajax-update="products-table" data-ajax-method="POST">
     <p>
-        Supplier name: <input type="text" name="SearchString" />
-        <input type="submit" value="Filter" />
+        Supplier name: <input type="text" name="filter" id="filter" />
+        <input type="button" value="Filter" onclick="ajaxQuery();" />
     </p>
 </form>
+@section Scripts {
+    <script type="text/javascript">
+        function ajaxQuery() {
+            console.log("entered method");
+            var filterValue = $("#filter").val();
+            console.log(filterValue);
+            $.ajax({
+                type: "POST",
+                url: "/products/FilterProductsAjax",
+                data: { filter: filterValue },
+                error: function (xhr, status, errorThrown) {
+                    var err = "Status " + status + " " + errorThrown;
+                    console.log(err);
+                }
+            }).done(function (data) {
+                jQuery("#products-table").html(data);
+                console.log(data);
+            })
 
-
-
-<table class="table">
-    <thead>
-        <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Image)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProductCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Supplier.Name)
-                </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-    var imageSrc = ImageHelper.bytesToString(item.Image);
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <img src="@imageSrc" width="50" height="50" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Supplier.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+        }
+    </script>
 }
-    </tbody>
-</table>
+<div id="products-table">
+    @{Html.RenderPartial("PartialViewList", Model);}
+</div>

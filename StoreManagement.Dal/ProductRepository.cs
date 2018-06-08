@@ -69,7 +69,7 @@ namespace StoreManagement.Dal
 
         public IList<Product> GetAll()
         {
-            return _context.Product.ToList();
+            return _context.Product.Include(prod=> prod.Supplier).ToList();
         }
 
         public async Task<IList<Product>> GetAllAsync()
