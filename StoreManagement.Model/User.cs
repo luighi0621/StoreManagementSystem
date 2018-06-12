@@ -11,9 +11,9 @@ namespace StoreManagement.Model
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Debe empezar con mayuscula")]
         [StringLength(30, MinimumLength =5)]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$", ErrorMessage ="Debe empezar con mayuscula")]
         public string Firstname { get; set; }
         [StringLength(30, MinimumLength = 5)]
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
