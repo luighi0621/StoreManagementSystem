@@ -81,7 +81,7 @@ namespace StoreManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Firstname,Lastname,Login,Password")] User user, IFormFile imageAvatar)
+        public async Task<IActionResult> Edit(int? id, [Bind("Id,Firstname,Lastname,Login,Password")] User user, IFormFile imageAvatar)
         {
             if (id != user.Id)
             {
@@ -130,7 +130,7 @@ namespace StoreManagement.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             var movie = await _context.GetAsync(m => m.Id == id);
             _context.Delete(movie);
@@ -138,7 +138,7 @@ namespace StoreManagement.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool UserExists(int? id)
         {
             return _context.Get(e => e.Id == id) != null;
         }

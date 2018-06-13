@@ -25,24 +25,18 @@ namespace StoreManagement.Test
                 {
                     Firstname = "Jose",
                     Lastname = "Perez",
-                    Login = "jperez",
-                    Password = "jperez",
                     Id = 1
                 },
                 new User()
                 {
                     Firstname = "Maria",
                     Lastname = "lopez",
-                    Login = "mlopez",
-                    Password = "mlopez",
                     Id = 2
                 },
                 new User()
                 {
                     Firstname = "Clelia",
                     Lastname = "Aguilar",
-                    Login = "caguilar",
-                    Password = "caguilar",
                     Id = 3
                 }
             };
@@ -137,7 +131,6 @@ namespace StoreManagement.Test
             var usersTest = this.MockUserRepository.GetAsync(u => u.Id == 3);
             User user = usersTest.Result;
             Assert.IsNotNull(usersTest);
-            Assert.AreEqual("caguilar", user.Login);
             Assert.AreEqual("Clelia", user.Firstname);
             Assert.AreEqual("Aguilar", user.Lastname);
         }
@@ -147,7 +140,6 @@ namespace StoreManagement.Test
         {
             User usersTest = this.MockUserRepository.Get(u=> u.Id == 3);
             Assert.IsNotNull(usersTest);
-            Assert.AreEqual("caguilar", usersTest.Login);
             Assert.AreEqual("Clelia", usersTest.Firstname);
             Assert.AreEqual("Aguilar", usersTest.Lastname);
         }
@@ -170,9 +162,7 @@ namespace StoreManagement.Test
             User newUser = new User()
                             {
                                 Firstname = "Karen",
-                                Lastname = "Valenzuela",
-                                Login = "kValenz",
-                                Password = "kValenz"
+                                Lastname = "Valenzuela"
             };
             MockUserRepository.Create(newUser);
             IList<User> list = MockUserRepository.GetAll();
@@ -189,7 +179,6 @@ namespace StoreManagement.Test
             User usersTest = this.MockUserRepository.Get(u => u.Id == 3);
             usersTest.Firstname = "Modified";
             usersTest.Lastname = "Modified";
-            usersTest.Login = "Modified";
             MockUserRepository.Update(usersTest);
             _mockUserRepository.Verify(x => x.Update(It.IsAny<User>()));
             User modified = this.MockUserRepository.Get(u => u.Id == 3);
@@ -198,7 +187,6 @@ namespace StoreManagement.Test
             Assert.IsNotNull(list);
             Assert.AreEqual(3, list.Count);
             Assert.AreEqual(usersTest.Firstname, modified.Firstname);
-            Assert.AreEqual(usersTest.Login, modified.Login);
             Assert.AreEqual(usersTest.Lastname, modified.Lastname);
         }
     }

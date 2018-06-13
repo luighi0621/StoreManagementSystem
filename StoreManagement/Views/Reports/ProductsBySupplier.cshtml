@@ -1,0 +1,42 @@
+﻿@using StoreManagement.Model;
+@model IEnumerable<IGrouping<Supplier,Product>>
+@{
+    ViewData["Title"] = "Products By Supplier";
+}
+
+<h2>Report Products By Supplier</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Supplier
+            </th>
+            <th>
+                Products
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @{ var rowNro = item.Key.Products.Count + 1; }
+                <td rowspan="@rowNro ">
+                    @Html.DisplayFor(modelItem => item.Key.Name)
+                </td>
+                
+            </tr>
+            @foreach (var prod in item.Key.Products.OrderBy(p=> p.Name))
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => prod.Name)
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+

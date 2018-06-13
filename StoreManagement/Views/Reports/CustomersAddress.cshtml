@@ -1,43 +1,40 @@
-﻿@model IEnumerable<StoreManagement.Model.Product>
+﻿@model IEnumerable<StoreManagement.Model.Customer>
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "CustomersAddress";
 }
 
-<h2>Index</h2>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
-<form data-ajax="true" method="post" data-ajax-update="products-table" data-ajax-method="POST">
+<h2>Customers Address</h2>
+<form data-ajax="true" method="post" data-ajax-update="customers-table" data-ajax-method="POST">
     <p>
-        Supplier name: <input type="text" name="filter" id="filter" />
-        <input type="button" value="Filter" onclick="ajaxQuery();" />
+        Address : <input type="text" name="filter" id="filter" />
+        <input type="button" value="Filter" onclick="ajaxCustomerQuery();" />
     </p>
 </form>
 
 @section Scripts {
     <script type="text/javascript">
-        function ajaxQuery() {
+        function ajaxCustomerQuery() {
             console.log("entered method");
             var filterValue = $("#filter").val();
             console.log(filterValue);
             $.ajax({
                 type: "POST",
-                url: "/products/FilterProductsAjax",
+                url: "/reports/FilterCustomersAjax",
                 data: { filter: filterValue },
                 error: function (xhr, status, errorThrown) {
                     var err = "Status " + status + " " + errorThrown;
                     console.log(err);
                 }
             }).done(function (data) {
-                jQuery("#products-table").html(data);
+                jQuery("#customers-table").html(data);
                 console.log(data);
             })
 
         }
     </script>
 }
-<div id="products-table">
-    @{Html.RenderPartial("PartialViewList", Model);}
+<div id="customers-table">
+    @{Html.RenderPartial("AddressCustomerPartial", Model);}
 </div>
+

@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using StoreManagement.Model;
+using Microsoft.AspNetCore.Identity;
 
 namespace StoreManagement.Dal
 {
@@ -15,17 +17,26 @@ namespace StoreManagement.Dal
         {
         }
 
-        public virtual DbSet<StoreManagement.Model.Customer> Customer { get; set; }
-        public virtual DbSet<StoreManagement.Model.Product> Product { get; set; }
-        public virtual DbSet<StoreManagement.Model.Supplier> Supplier { get; set; }
-        public virtual DbSet<StoreManagement.Model.User> User { get; set; }
+        public virtual DbSet<Customer> Customer { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<Supplier> Supplier { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<UserClaim> UserClaim { get; set; }
+
+//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//        {
+//            if (!optionsBuilder.IsConfigured)
+//            {
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+//                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=StoreManagement;Integrated Security=True;Pooling=False;");
+//            }
+//        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<StoreManagement.Model.Customer>(entity =>
+            modelBuilder.Entity<Customer>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Address).HasMaxLength(50);
 
@@ -44,7 +55,7 @@ namespace StoreManagement.Dal
                 entity.Property(e => e.Phone).HasMaxLength(15);
             });
 
-            modelBuilder.Entity<StoreManagement.Model.Product>(entity =>
+            modelBuilder.Entity<Product>(entity =>
             {
                 entity.Property(e => e.Description).HasMaxLength(100);
 
@@ -63,7 +74,7 @@ namespace StoreManagement.Dal
                     .HasConstraintName("FK_Product_Supplier");
             });
 
-            modelBuilder.Entity<StoreManagement.Model.Supplier>(entity =>
+            modelBuilder.Entity<Supplier>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
 
@@ -78,9 +89,11 @@ namespace StoreManagement.Dal
                     .HasMaxLength(20);
             });
 
-            modelBuilder.Entity<StoreManagement.Model.User>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Email).HasMaxLength(256);
 
                 entity.Property(e => e.Firstname)
                     .IsRequired()
@@ -88,13 +101,21 @@ namespace StoreManagement.Dal
 
                 entity.Property(e => e.Lastname).HasMaxLength(20);
 
-                entity.Property(e => e.Login)
-                    .IsRequired()
-                    .HasMaxLength(20);
+                entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
 
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasMaxLength(20);
+                entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
+
+                entity.Property(e => e.UserName).HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<UserClaim>(entity =>
+            {
+                entity.HasIndex(e => e.UserId);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserClaim)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_UserClaims_User_UserId");
             });
         }
     }

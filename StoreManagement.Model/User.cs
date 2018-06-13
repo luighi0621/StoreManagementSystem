@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace StoreManagement.Model
 {
-    public partial class User
+    public partial class User: IdentityUser<int>
     {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public User()
+        {
+            UserClaim = new HashSet<UserClaim>();
+        }
+
         [Required(ErrorMessage = "Debe empezar con mayuscula")]
         [StringLength(30, MinimumLength =5)]
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$", ErrorMessage ="Debe empezar con mayuscula")]
@@ -18,12 +21,8 @@ namespace StoreManagement.Model
         [StringLength(30, MinimumLength = 5)]
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string Lastname { get; set; }
-        [Required]
-        [StringLength(20, MinimumLength = 6)]
-        public string Login { get; set; }
-        [Required]
-        [StringLength(20, MinimumLength = 6)]
-        public string Password { get; set; }
         public byte[] AvatarImage { get; set; }
+
+        public ICollection<UserClaim> UserClaim { get; set; }
     }
 }

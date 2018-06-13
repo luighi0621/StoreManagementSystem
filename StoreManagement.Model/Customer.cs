@@ -15,7 +15,6 @@ namespace StoreManagement.Model
         public string Lastname { get; set; }
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string Address { get; set; }
-        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string Email { get; set; }
         [RegularExpression(@"^[0-9]*$")]
         public string Phone { get; set; }

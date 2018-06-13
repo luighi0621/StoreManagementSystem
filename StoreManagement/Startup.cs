@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using StoreManagement.Dal;
 using Microsoft.EntityFrameworkCore;
 using StoreManagement.Dal.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using StoreManagement.Model;
 
 namespace StoreManagement
 {
@@ -24,7 +26,6 @@ namespace StoreManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
 
             services.AddDbContext<StoreManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbContext")));
 
@@ -32,6 +33,42 @@ namespace StoreManagement
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ISupplierRepository, SupplierRepository>();
+
+            //services.AddIdentity<User, IdentityRole<int>>()
+            //    .AddEntityFrameworkStores<StoreManagementContext>()
+            //    .AddDefaultTokenProviders();
+
+            //services.Configure<IdentityOptions>(options =>
+            //    {
+            //        options.Password.RequireDigit = true;
+            //        options.Password.RequiredLength = 8;
+            //        options.Password.RequireNonAlphanumeric = false;
+            //        options.Password.RequireUppercase = true;
+            //        options.Password.RequireLowercase = false;
+            //        options.Password.RequiredUniqueChars = 6;
+
+            //        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(20);
+            //        options.Lockout.MaxFailedAccessAttempts = 5;
+            //        options.Lockout.AllowedForNewUsers = true;
+
+            //        options.User.RequireUniqueEmail = true;
+            //    }
+            //);
+
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.Cookie.HttpOnly = true;
+            //    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+
+            //    options.LoginPath = "/Account/Login";
+
+            //    options.AccessDeniedPath = "/Account/AccessDenied";
+            //    options.SlidingExpiration = true;
+            //});
+
+            //services.AddTransient<IEmailServer, EmailSender>();
+            services.AddMvc();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +85,7 @@ namespace StoreManagement
             }
 
             app.UseStaticFiles();
-
+            //app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
