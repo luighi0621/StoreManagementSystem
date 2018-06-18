@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Data;
 
 namespace StoreManagement.Dal
 {
@@ -46,6 +47,8 @@ namespace StoreManagement.Dal
             {
                 try
                 {
+                    _context.Product.RemoveRange(delete.Products);
+                    //_context.SaveChanges();
                     _context.Supplier.Remove(delete);
                     _context.SaveChanges();
                 }
@@ -56,11 +59,16 @@ namespace StoreManagement.Dal
             }
         }
 
+        public DataTable ExecuteQuery(string query)
+        {
+            return null;
+        }
+
         public Supplier Get(Expression<Func<Supplier, bool>> condition)
         {
             if (condition != null)
             {
-                var singlesupplier = _context.Supplier.Where(condition).FirstOrDefault();
+                var singlesupplier = _context.Supplier.Where(condition).Include(s => s.Products).FirstOrDefault();
                 return singlesupplier;
 
             }
@@ -81,7 +89,7 @@ namespace StoreManagement.Dal
         {
             if (condition != null)
             {
-                var singlesupplier = _context.Supplier.Where(condition).FirstOrDefaultAsync();
+                var singlesupplier = _context.Supplier.Where(condition).Include(s=> s.Products).FirstOrDefaultAsync();
                 return await singlesupplier;
 
             }

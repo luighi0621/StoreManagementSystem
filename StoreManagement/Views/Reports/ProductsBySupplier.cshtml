@@ -1,5 +1,6 @@
 ﻿@using StoreManagement.Model;
-@model IEnumerable<IGrouping<Supplier,Product>>
+@*@model IEnumerable<IGrouping<Supplier,Product>>*@
+@model System.Data.DataTable
 @{
     ViewData["Title"] = "Products By Supplier";
 }
@@ -18,7 +19,19 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (var cell in row.ItemArray)
+                {
+                    <td>
+                        @cell.ToString()
+                    </td>
+                }
+            </tr>
+
+        }
+        @*@foreach (var item in Model)
         {
             <tr>
                 @{ var rowNro = item.Key.Products.Count + 1; }
@@ -35,7 +48,7 @@
                     </td>
                 </tr>
             }
-        }
+        }*@
     </tbody>
 </table>
 

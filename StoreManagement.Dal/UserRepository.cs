@@ -2,6 +2,7 @@
 using StoreManagement.Dal.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -54,6 +55,11 @@ namespace StoreManagement.Dal
                 }
             }
 
+        }
+
+        public DataTable ExecuteQuery(string query)
+        {
+            return null;
         }
 
         public StoreManagement.Model.User Get(Expression<Func<StoreManagement.Model.User, bool>> condition)

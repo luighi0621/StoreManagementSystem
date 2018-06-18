@@ -28,15 +28,17 @@ namespace StoreManagement
         {
 
             services.AddDbContext<StoreManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbContext")));
+            services.AddDbContext<UserIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("UserDbContext")));
 
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ISupplierRepository, SupplierRepository>();
+            services.AddScoped<IOperationRepository, OperationRepository>();
 
-            //services.AddIdentity<User, IdentityRole<int>>()
-            //    .AddEntityFrameworkStores<StoreManagementContext>()
-            //    .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<UserIdentityDbContext>()
+                .AddDefaultTokenProviders();
 
             //services.Configure<IdentityOptions>(options =>
             //    {
@@ -85,7 +87,7 @@ namespace StoreManagement
             }
 
             app.UseStaticFiles();
-            //app.UseAuthentication();
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

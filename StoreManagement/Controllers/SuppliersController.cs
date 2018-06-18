@@ -74,7 +74,7 @@ namespace StoreManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Firstname,Lastname,Login,Password")] Supplier sup)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,SupplierCode")] Supplier sup)
         {
             if (id != sup.Id)
             {

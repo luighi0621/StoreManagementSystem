@@ -1,4 +1,5 @@
-﻿@model IEnumerable<StoreManagement.Model.Customer>
+﻿@*@model IEnumerable<StoreManagement.Model.Customer>*@
+@model System.Data.DataTable
 
 @{
     ViewData["Title"] = "Address Customer";
@@ -8,34 +9,46 @@
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Id)
+                    Firstname
+                    @*@Html.DisplayNameFor(model => model.Firstname)*@
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Firstname)
+                    Lastname
+                    @*@Html.DisplayNameFor(model => model.Lastname)*@
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Lastname)
+                    Address
+                    @*@Html.DisplayNameFor(model => model.Address)*@
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Address)
+                    Email
+                    @*@Html.DisplayNameFor(model => model.Email)*@
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Email)
+                    Phone
+                    @*@Html.DisplayNameFor(model => model.Phone)*@
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Phone)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CustomerCode)
+                    Code
+                    @*@Html.DisplayNameFor(model => model.CustomerCode)*@
                 </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (var cell in row.ItemArray)
+                {
+                    <td>
+                        @cell.ToString()
+                    </td>
+                }
+            </tr>
+
+        }
+@*@foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Firstname)
             </td>
@@ -55,6 +68,6 @@
                 @Html.DisplayFor(modelItem => item.CustomerCode)
             </td>
         </tr>
-}
+}*@
     </tbody>
 </table>

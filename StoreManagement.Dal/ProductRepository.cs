@@ -7,6 +7,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Data.Common;
+using System.Data;
 
 namespace StoreManagement.Dal
 {
@@ -54,6 +56,31 @@ namespace StoreManagement.Dal
                     throw ex;
                 }
             }
+        }
+
+        public DataTable ExecuteQuery(string query)
+        {
+            DataTable data = new DataTable();
+            var conn = _context.Database.GetDbConnection();
+            try
+            {
+                conn.Open();
+                using (var command = conn.CreateCommand())
+                {
+                    command.CommandText = query;
+                    DbDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        data.Load(reader);
+                    }
+                    reader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return data;
         }
 
         public Product Get(Expression<Func<Product, bool>> condition)

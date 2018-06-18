@@ -12,6 +12,7 @@ namespace StoreManagement.Model
         public User()
         {
             UserClaim = new HashSet<UserClaim>();
+            UserRol = new HashSet<UserRol>();
         }
 
         [Required(ErrorMessage = "Debe empezar con mayuscula")]
@@ -24,5 +25,6 @@ namespace StoreManagement.Model
         public byte[] AvatarImage { get; set; }
 
         public ICollection<UserClaim> UserClaim { get; set; }
+        public ICollection<UserRol> UserRol { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Data;
 
 namespace StoreManagement.Dal
 {
@@ -54,6 +55,11 @@ namespace StoreManagement.Dal
                     throw ex;
                 }
             }
+        }
+
+        public DataTable ExecuteQuery(string query)
+        {
+            return null;
         }
 
         public Customer Get(Expression<Func<Customer, bool>> condition)
