@@ -7,24 +7,20 @@ using System.Text;
 
 namespace StoreManagement.Model
 {
-    public partial class User: IdentityUser<int>
+    public partial class User
     {
-        public User()
-        {
-            UserClaim = new HashSet<UserClaim>();
-            UserRol = new HashSet<UserRol>();
-        }
-
+        [Key]
+        public int Id { get; set; }
         [Required(ErrorMessage = "Debe empezar con mayuscula")]
-        [StringLength(30, MinimumLength =5)]
+        [StringLength(30, MinimumLength = 3)]
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$", ErrorMessage ="Debe empezar con mayuscula")]
         public string Firstname { get; set; }
-        [StringLength(30, MinimumLength = 5)]
+        [StringLength(30, MinimumLength = 4)]
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public string Lastname { get; set; }
+        [StringLength(30, MinimumLength = 4)]
+        public string Login { get; set; }
         public byte[] AvatarImage { get; set; }
-
-        public ICollection<UserClaim> UserClaim { get; set; }
-        public ICollection<UserRol> UserRol { get; set; }
+        
     }
 }

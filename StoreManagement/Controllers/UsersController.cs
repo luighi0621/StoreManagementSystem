@@ -35,7 +35,7 @@ namespace StoreManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id, Firstname, Lastname, Login, Password")] User  user, IFormFile imageAvatar)
+        public async Task<IActionResult> Create([Bind("Id, Firstname, Lastname, Login")] User  user, IFormFile imageAvatar)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace StoreManagement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("Id,Firstname,Lastname,Login,Password")] User user, IFormFile imageAvatar)
+        public async Task<IActionResult> Edit(int? id, [Bind("Id,Firstname,Lastname,Login")] User user, IFormFile imageAvatar)
         {
             if (id != user.Id)
             {
